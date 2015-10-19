@@ -27,6 +27,7 @@ BMP_API unsigned char* BMP_Handler::loadBMP(const char* filename, int& width, in
 		return NULL;
 	}
 
+	//Reads in the bitmap headers
 	file.read((char*)&bmpHeader, sizeof(BITMAPFILEHEADER));
 	file.read((char*)&bmpInfo, sizeof(BITMAPINFOHEADER));
 
@@ -36,6 +37,7 @@ BMP_API unsigned char* BMP_Handler::loadBMP(const char* filename, int& width, in
 
 	unsigned char* pixels = new unsigned char[bmpHeader.bfSize];
 
+	//Reads in RGB values to the pixels array
 	file.read((char*)pixels, bmpHeader.bfSize);
 
 	file.close();
@@ -49,6 +51,7 @@ BMP_API void BMP_Handler::saveBMP(const char* filename, const unsigned char* RGB
 	myfile.write((const char*)&bmpHeader, sizeof(BITMAPFILEHEADER));
 	myfile.write((const char*)&bmpInfo, sizeof(BITMAPINFOHEADER));
 
+	//Writes out altered bits to image
 	myfile.write((const char*)RGB_values, 3*width*height);
 
 	myfile.close();
